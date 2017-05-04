@@ -19,14 +19,16 @@ podTemplate(
     }
     stage('build') {
       container('assemblyline') {
-        sh "touch foo.txt"
-        sh "exit 0"
+        sh """
+          echo "some text" > foo.txt
+        """
       }
     }
     stage('docker build') {
       container('docker') {
-        sh "ls"
-        sh "docker ps"
+        sh """
+          docker build .
+        """
       }
     }
   }
