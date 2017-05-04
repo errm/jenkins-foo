@@ -12,6 +12,7 @@ podTemplate(label: 'jenkins-pipeline', containers: [
     }
     stage('tests') {
       container('assemblyline') {
+        sh "touch foo.txt"
         sh "exit 0"
       }
     }
@@ -25,6 +26,7 @@ podTemplate(label: 'deployer', containers: [
     stage('deploy') {
       container('assemblyline') {
         sh "echo 'deploying'"
+        sh "ls -la" 
         sh "exit 0"
       }
     }
