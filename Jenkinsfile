@@ -27,22 +27,20 @@ podTemplate(
     stage('docker build') {
       container('docker') {
         sh """
-          docker build .
+          docker build -t quay.io/foo/bar:abc .
         """
       }
     }
   }
 }
 
-podTemplate(label: 'deployer', containers: [
-  containerTemplate(name: 'assemblyline', image: 'quay.io/assemblyline/alpine:3.5', command: 'cat', ttyEnabled: true),
+podTemplate(label: 'testing', containers: [
+  containerTemplate(name: 'under-test', image: 'quay.io/foo/bar:abc', command: 'cat', ttyEnabled: true),
 ]){
-  node('deployer') {
-    stage('deploy') {
-      container('assemblyline') {
-        sh "echo 'deploying'"
-        sh "ls -la" 
-        sh "exit 0"
+  node('testing') {
+    stage('test') {
+      container('under-test') {
+        sh "echo /foo.txt"
       }
     }
   }
