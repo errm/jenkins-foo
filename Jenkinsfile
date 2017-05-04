@@ -40,7 +40,7 @@ podTemplate(label: 'testing', containers: [
   node('testing') {
     stage('test') {
       container('under-test') {
-        sh "echo /foo.txt"
+        sh "cat /foo.txt"
       }
     }
   }
