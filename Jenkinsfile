@@ -37,6 +37,9 @@ podTemplate(
 podTemplate(label: 'testing', containers: [
   containerTemplate(name: 'under-test', image: 'quay.io/foo/bar:abc', command: 'cat', ttyEnabled: true),
 ]){
+
+  stage "Tests"
+
   tasks = [:]
 
   tasks["lint"] = {
@@ -58,6 +61,8 @@ podTemplate(label: 'testing', containers: [
       }
     }
   }
+  
+
 
   parallel tasks
 }
