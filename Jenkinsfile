@@ -4,7 +4,7 @@ podTemplate(
   label: 'build',
   containers: [
     containerTemplate(name: 'assemblyline', image: 'quay.io/assemblyline/alpine:3.5', command: 'cat', ttyEnabled: true),
-    containerTemplate(name: 'docker', image: 'docker:17.04', command: 'cat', ttyEnabled: true),
+    containerTemplate(name: 'docker', image: 'docker:1.11.1', command: 'cat', ttyEnabled: true),
   ],
   volumes:[
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
