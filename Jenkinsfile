@@ -37,11 +37,27 @@ podTemplate(
 podTemplate(label: 'testing', containers: [
   containerTemplate(name: 'under-test', image: 'quay.io/foo/bar:abc', command: 'cat', ttyEnabled: true),
 ]){
-  node('testing') {
-    stage('test') {
-      container('under-test') {
-        sh "cat /foo.txt"
+  tasks = [:]
+
+  tasks["lint"] = {
+    node('testing') {
+      stage('lint') {
+        container('under-test') {
+          sh "ls -la /foo.txt"
+        }
       }
     }
   }
+
+  tasks["test"] = {
+    node('testing') {
+      stage('test') {
+        container('under-test') {
+          sh "cat /foo.txt"
+        }
+      }
+    }
+  }
+
+  parallel tasks
 }
